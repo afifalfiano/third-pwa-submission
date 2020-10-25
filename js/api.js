@@ -69,11 +69,17 @@ function getScheduleCompetitions() {
     .then(function(data) {
         var scheduleLeague = "";
         data.matches.forEach(function(team) {
-            console.log(team);
             scheduleLeague += `
+            <style>
+            .league {
+                padding-top: 15px;
+                font-weight: 500;
+                text-transform: uppercase;
+            }
+            </style>
             <div class="card">
                     <div class="card-content center">
-                       <span class="card-title truncate center">${data.competition.name} - Matchday ${team.matchday}</span>
+                       <span class="card-title truncate center">Matchday ${team.matchday}</span>
                        <p> 
                        <a href="./tim.html?id=${team.awayTeam.id}">
                        <span>${team.homeTeam.name}</span>
@@ -83,7 +89,8 @@ function getScheduleCompetitions() {
                         <span>${team.awayTeam.name}</span>
                         </a>
                        </p>
-                       <p>Kickoff: ${team.utcDate}<p>
+                       <p>Jadwal: ${team.utcDate}<p>
+                       <p class="league">${data.competition.name}</p>
                     </div>
             </div>
             `;
@@ -117,7 +124,11 @@ function getTopScorers() {
     .then(jsonData)
     .then(function(data) {
         var topScorer = `
-        <style>
+        
+        `;
+        data.scorers.forEach(function(scorer, index) {
+            topScorer += `
+            <style>
             .same-width{
                 width: 15%;
             }
@@ -129,20 +140,15 @@ function getTopScorers() {
             <table class="responsive-table highlight">
                 <thead>
                 <tr>
-                    <th class="index-number">No</th>
-                    <th class="same-width">Nama</th>
-                    <th class="same-width">Negara</th>
-                    <th class="same-width">Club</th>
-                    <th class="same-width">Posisi</th>
-                    <th class="same-width">Total Gol</th>
+                    <th >No</th>
+                    <th >Nama</th>
+                    <th >Negara</th>
+                    <th >Club</th>
+                    <th >Posisi</th>
+                    <th >Total Gol</th>
                 </tr>
                 </thead>
-            <table>
-        `;
-        data.scorers.forEach(function(scorer, index) {
-            console.log(scorer);
-            topScorer += `
-            <table class="responsive-table highlight">
+
                 <tbody>
                 <tr>
                     <td class="index-number">${index + 1}</td>
@@ -186,58 +192,9 @@ function getClassmenLeague() {
     .then(status)
     .then(jsonData)
     .then(function(data) {
-        var classmenLeague = `
-        <style>
-            .same-width{
-                width: 10%;
-            }
-            .same-width-form {
-                width: 20%;
-            }
-            .index-number {
-                width: 6%;
-            }
-            .club {
-                width: 20%;
-            }
-            .D{
-                background-color: blue;
-                padding: 3px;
-                color: white;
-                border-radius: 5px;
-            }
-            .W{
-                background-color: green;
-                padding: 3px;
-                color: white;
-                border-radius: 5px;
-            }
-            .L{
-                background-color: red;
-                padding: 3px;
-                color: white;
-                border-radius: 5px;
-            }
-            
-            </style>
-        <table class="responsive-table highlight">
-                <thead>
-                <tr>
-                    <th class="index-number">No</th>
-                    <th class="club">Club</th>
-                    <th class="same-width-form">Permainan Terkahir</th>
-                    <th class="same-width">Menang</th>
-                    <th class="same-width">Kalah</th>
-                    <th class="same-width">Seri</th>
-                    <th class="same-width">Total Gol</th>
-                    <th class="same-width">Point</th>
-                </tr>
-                </thead>
-        </table>
-        `;
+        var classmenLeague = "";
         
         data.standings[0].table.forEach(function(team, index) {
-            console.log(team);
             const split = team.form.split(',');
             const edit = split.map(item => {
                 if (item === 'W') {
@@ -256,7 +213,58 @@ function getClassmenLeague() {
                 return item;
             });
             classmenLeague += `
+            <style>
+            .same-width{
+                width: 10%;
+            }
+            .same-width-form {
+                width: 20%;
+            }
+            .index-number {
+                width: 6%;
+            }
+            .club {
+                width: 20%;
+            }
+            .D{
+                background-color: blue;
+                padding-top:3px;
+                padding-bottom:3px;
+                padding-left:5px;
+                padding-right:5px;
+                color: white;
+                border-radius: 5px;
+            }
+            .W{
+                background-color: green;
+                padding: 3px;
+                color: white;
+                border-radius: 5px;
+            }
+            .L{
+                background-color: red;
+                padding-left: 5px;
+                padding-right: 5px;
+                padding-top: 3px;
+                padding-bottom: 3px;
+                color: white;
+                border-radius: 5px;
+            }
+            
+            </style>
             <table class="responsive-table highlight">
+                <thead>
+                <tr>
+                    <th >No</th>
+                    <th >Club</th>
+                    <th >Permainan Terkahir</th>
+                    <th >Menang</th>
+                    <th >Kalah</th>
+                    <th >Seri</th>
+                    <th >Total Gol</th>
+                    <th >Point</th>
+                </tr>
+                </thead>
                 <tbody>
                 <tr>
                     <td class="index-number">${index + 1}</td>
@@ -302,26 +310,29 @@ function getListTeam() {
     .then(function(data) {
         var listTeam = "";
         data.teams.forEach(function(tim) {
-            console.log(tim);
             listTeam += `
                 <style>
+                .row .club {
+                    margin-top: 0;
+                }
                 .card {
                     width: 200px;
-                    height: 300px;
+                    height: 290px;
                     padding: 20px;
+                    padding-bottom: 0px;
                     margin: 0 auto;
                     margin-top: 0;
                     margin-bottom: 40px;
                 }
                 </style>
-                <div class="col s12 lg3 m3">
+                <div class="col s12 lg3 m4">
                 <div class="card">
                     <div class="card-image">
                     <a href="./tim.html?id=${tim.id}">
                     <img src="${tim.crestUrl}" alt="${tim.name}" class="responsive-img">
                     </div>
                     <div class="card-content">
-                    <p class="card-title center">${tim.name}</p>
+                    <p class="text center">${tim.name}</p>
                     </div>
                     </a>
                 </div>
@@ -370,7 +381,6 @@ function getTeamById() {
       .then(status)
       .then(jsonData)
       .then(function(data) {
-          console.log(data);
   
           var teamHTML = `
           <div class="card">

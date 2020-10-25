@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4) {
                 var content = document.querySelector('#body-content');
-                const tabFeature = document.querySelectorAll(".tabs");
+                const tabFeature = document.querySelector(".tabs");
                 M.Tabs.init(tabFeature, {
                     duration: 500,
                     swipeable: true
@@ -71,5 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
         xhttp.open("GET", "pages/" + page + ".html", true);
         xhttp.send();
     }
+    document.querySelectorAll('.tab').forEach(function(el) {
+        el.addEventListener("click", function(event) {
+            tab = event.target.getAttribute('id');
+            return tab;
+        })
+    })
 })
+
 
