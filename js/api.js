@@ -546,11 +546,10 @@ function getTeamById() {
           </div>
           </div>
             `;
-            // <div class="card-content">
-            //   <span class="card-title">${data.result.post_title}</span>
-            //   ${snarkdown(data.result.post_content)}
-            // </div>
             data.squad.forEach(function(player, index) {
+                const dateParse = new Date(player.dateOfBirth);
+                const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const parse = dateParse.toLocaleDateString("id-ID", optionsDate);
                 if(player.shirtNumber === null) {
                     player.shirtNumber = 'Tidak diketahui';
                 };
@@ -586,13 +585,34 @@ function getTeamById() {
                         <td class="same-width">${player.position}</td>
                         <td class="same-width">${player.role}</td>
                         <td class="same-width">${player.shirtNumber}</td>
-                        <td class="same-width">${player.dateOfBirth}</td>
+                        <td class="same-width">${parse}</td>
                     </tr>
                     </tbody>
                 </table>
-                `
+                `;
             })
+            var footerTeam = `
+            <style>
+            footer {
+                margin-top: 20px;
+                bottom:0;
+                left:0;
+            }
+            .page-footer {
+                padding-top: 0;
+                width: 100%;
+            }
+            </style>
+            <footer class="page-footer  teal darken-3">
+                <div class="footer-copyright teal darken-3">
+                <div class="container">
+                © 2020 Copyright all reserved by Afif Alfiano
+                </div>
+                </div>
+            </footer>            
+            `;
         document.getElementById("body-content").innerHTML = teamHTML;
+        document.getElementById("footer-content").innerHTML = footerTeam;
         resolve(data);
       })
     })
