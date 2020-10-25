@@ -1,4 +1,24 @@
 {
     "name": "Kabar Bola",
-    "short_name": "Kabol"
+    "short_name": "Kabol",
+    "description": "Aplikasi Sepak Bola Informasi",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "scope": "/",
+    "background_color": "#00897B",
+    "theme_color": "#00897B",
+    "icons": [
+        {
+            "src": "icon.png",
+            "sizes": "256x256",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
 }

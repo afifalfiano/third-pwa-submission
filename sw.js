@@ -5,13 +5,15 @@ var urlsToCache = [
     "/nav.html",
     "/index.html",
     "/pages/home.html",
-    "/pages/contact.html",
-    "/pages/about.html",
+    "/pages/daftartim.html",
+    "/pages/klasmen.html",
+    "/pages/timfavorit.html",
+    "/pages/topskor.html",
+    "/tim.html",
     "css/materialize.min.css",
     "js/materialize.min.js",
     "js/nav.js",
     "js/api.js",
-    "/article.html"
 ]
 
 self.addEventListener("install", function(event) {
@@ -23,7 +25,7 @@ self.addEventListener("install", function(event) {
 })
 
 self.addEventListener("fetch", function(event) {
-    var base_url = "https://api.football-data.org/v2/competitions/2021/standings/";
+    var base_url = "https://api.football-data.org/v2/";
   
     if (event.request.url.indexOf(base_url) > -1) {
       event.respondWith(

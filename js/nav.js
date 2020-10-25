@@ -42,12 +42,33 @@ document.addEventListener('DOMContentLoaded', function() {
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4) {
                 var content = document.querySelector('#body-content');
+                var footer = document.querySelector('#footer-content');
                 const tabFeature = document.querySelector(".tabs");
                 M.Tabs.init(tabFeature, {
                     duration: 500,
                     swipeable: true
 
                 });
+
+                footer.innerHTML = `
+                <style>
+                footer {
+                    bottom:0;
+                    left:0;
+                }
+                .page-footer {
+                    padding-top: 0;
+                    width: 100%;
+                }
+                </style>     
+                <footer class="page-footer  teal darken-3">
+                    <div class="footer-copyright teal darken-3">
+                    <div class="container">
+                    © 2020 Copyright all reserved by Afif Alfiano
+                    </div>
+                    </div>
+                </footer>
+                `;
                 if (page === "home") {
                     getScheduleCompetitions()
                 } else if (page === "timfavorit") {
