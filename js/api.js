@@ -51,13 +51,32 @@ function getScheduleCompetitions() {
             }
         })
     }
+
+    checkTabActive = base_url + "competitions/2021/matches?status=SCHEDULED";
+    if (idTab === '#ligainggris' || idTab === '#klasmen') {
+        checkTabActive = base_url + "competitions/2021/matches?status=SCHEDULED";
+    } else if (idTab === '#ligajerman') {
+        checkTabActive = base_url + "competitions/2002/matches?status=SCHEDULED";
+    } else if (idTab === '#ligabelanda') {
+        checkTabActive = base_url + "competitions/2003/matches?status=SCHEDULED";
+    } else if (idTab === '#ligaspanyol') {
+        checkTabActive = base_url + "competitions/2014/matches?status=SCHEDULED";
+    } else if (idTab === '#ligaperancis') {
+        checkTabActive = base_url + "competitions/2015/matches?status=SCHEDULED";
+    } else if (idTab === '#ligachampion') {
+        checkTabActive = base_url + "competitions/2001/matches?status=SCHEDULED";
+    }
    
-    fetch(base_url + "competitions/2021/matches?status=SCHEDULED", options)
+    fetch(checkTabActive, options)
     .then(status)
     .then(jsonData)
     .then(function(data) {
         var scheduleLeague = "";
+        
         data.matches.forEach(function(team) {
+            const dateParse = new Date(team.utcDate);
+            const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const parse = dateParse.toLocaleDateString("id-ID", optionsDate);
             scheduleLeague += `
             <style>
             .league {
@@ -70,41 +89,83 @@ function getScheduleCompetitions() {
                     <div class="card-content center">
                        <span class="card-title truncate center">Matchday ${team.matchday}</span>
                        <p> 
-                       <a href="./tim.html?id=${team.awayTeam.id}">
-                       <span>${team.homeTeam.name}</span>
-                       </a>
-                        <span>Vs</span>
-                        <a href="./tim.html?id=${team.awayTeam.id}">
-                        <span>${team.awayTeam.name}</span>
-                        </a>
+                            <a href="./tim.html?id=${team.awayTeam.id}">
+                            <span>${team.homeTeam.name}</span>
+                            </a>
                        </p>
-                       <p>Jadwal: ${team.utcDate}<p>
+                        <p>Vs</p>
+                        <p>
+                            <a href="./tim.html?id=${team.awayTeam.id}">
+                            <span>${team.awayTeam.name}</span>
+                            </a>
+                       </p>
+                       <hr/>
+                       <p>${parse}</p>
+                       <hr/>
                        <p class="league">${data.competition.name}</p>
                     </div>
             </div>
             `;
 
-            document.getElementById("ligainggris").innerHTML = scheduleLeague;
+            document.getElementById("jadwal").innerHTML = scheduleLeague;
         });
+        checkRequestSchedule();
     })
     .catch(notifError);
 }
 
-function getTopScorers() {
-    if ("caches" in window) {
-        caches.match(base_url + "competitions/2021/scorers").then(function(response){
-            if(response) {
-                response.json().then(function(data) {
-                    var scheduleLeague = "";
-                    data.scorers.forEach(function(schedule) {
-                        console.log(schedule);
-                    })
-                });
+function checkRequestSchedule() {
+
+    document.querySelectorAll('ul li').forEach(function(el) {
+        el.addEventListener('click', function(event) {
+            idTab = event.target.hash;
+             if (idTab === '#ligainggris' || idTab === '#klasmen') {
+                getScheduleCompetitions();
+            } else if (idTab === '#ligajerman') {
+                getScheduleCompetitions();
+            } else if (idTab === '#ligaperancis') {
+                getScheduleCompetitions();
+            } else if (idTab === '#ligaspanyol') {
+                getScheduleCompetitions();
+            } else if (idTab === '#ligabelanda'){
+                getScheduleCompetitions();
+            } else if (idTab === '#ligachampion') {
+                getScheduleCompetitions();
             }
+            console.log(idTab);
         })
+    })
+}
+
+function getTopScorers() {
+    // if ("caches" in window) {
+    //     caches.match(base_url + "competitions/2021/scorers").then(function(response){
+    //         if(response) {
+    //             response.json().then(function(data) {
+    //                 var scheduleLeague = "";
+    //                 data.scorers.forEach(function(schedule) {
+    //                     console.log(schedule);
+    //                 })
+    //             });
+    //         }
+    //     })
+    // }
+    checkTabActive = base_url + "competitions/2021/scorers";
+    if (idTab === '#ligainggris' || idTab === '#klasmen') {
+        checkTabActive = base_url + "competitions/2021/scorers";
+    } else if (idTab === '#ligajerman') {
+        checkTabActive = base_url + "competitions/2002/scorers";
+    } else if (idTab === '#ligabelanda') {
+        checkTabActive = base_url + "competitions/2003/scorers";
+    } else if (idTab === '#ligaspanyol') {
+        checkTabActive = base_url + "competitions/2014/scorers";
+    } else if (idTab === '#ligaperancis') {
+        checkTabActive = base_url + "competitions/2015/scorers";
+    } else if (idTab === '#ligachampion') {
+        checkTabActive = base_url + "competitions/2001/scorers";
     }
 
-    fetch(base_url + "competitions/2021/scorers", options)
+    fetch(checkTabActive, options)
     .then(status)
     .then(jsonData)
     .then(function(data) {
@@ -147,10 +208,33 @@ function getTopScorers() {
             </table>
             `;
 
-            document.getElementById("ligainggris").innerHTML = topScorer;
+            document.getElementById("topskorer").innerHTML = topScorer;
         });
+        checkRequestTopScorer();
     })
     .catch(notifError);
+}
+
+function checkRequestTopScorer() {
+
+    document.querySelectorAll('ul li').forEach(function(el) {
+        el.addEventListener('click', function(event) {
+            idTab = event.target.hash;
+             if (idTab === '#ligainggris' || idTab === '#klasmen') {
+                getTopScorers();
+            } else if (idTab === '#ligajerman') {
+                getTopScorers();
+            } else if (idTab === '#ligaperancis') {
+                getTopScorers();
+            } else if (idTab === '#ligachampion') {
+                getTopScorers();
+            } else if (idTab === '#ligaspanyol') {
+                getTopScorers();
+            } else if (idTab === '#ligabelanda'){
+                getTopScorers();
+            }
+        })
+    })
 }
 
 function getClassmenLeague() {
@@ -166,7 +250,7 @@ function getClassmenLeague() {
             }
         })
     }
-
+    checkTabActive = base_url + "competitions/2021/standings";
     if (idTab === '#ligainggris' || idTab === '#klasmen') {
         checkTabActive = base_url + "competitions/2021/standings";
     } else if (idTab === '#ligajerman') {
@@ -300,20 +384,6 @@ function checkRequestLeague() {
             // return;
         })
     })
-    
-    // if (idTab === '#ligainggris' || idTab === '#klasmen') {
-    //     getClassmenLeague();
-    // } else if (idTab === '#ligajerman') {
-    //     getClassmenLeague();
-    // } else if (idTab === '#ligabelanda') {
-    //     getClassmenLeague();
-    // } else if (idTab === '#ligaspanyol') {
-    //     getClassmenLeague();
-    // } else if (idTab === '#ligaperancis') {
-    //     getClassmenLeague();
-    // } else if (idTab === '#ligachampion') {
-    //     getClassmenLeague();
-    // }
 }
 
 function getListTeam() {
@@ -329,9 +399,20 @@ function getListTeam() {
     //         }
     //     })
     // }
+    checkTabActive = base_url + "teams?areas=2072";
+    if (idTab === '#ligainggris' || idTab === '#klasmen') {
+        checkTabActive = base_url + "teams?areas=2072";
+    } else if (idTab === '#ligajerman') {
+        checkTabActive = base_url + "teams?areas=2088";
+    } else if (idTab === '#ligabelanda') {
+        checkTabActive = base_url + "teams?areas=2163";
+    } else if (idTab === '#ligaspanyol') {
+        checkTabActive = base_url + "teams?areas=2224";
+    } else if (idTab === '#ligaperancis') {
+        checkTabActive = base_url + "teams?areas=2081";
+    } 
 
-
-    fetch(base_url + "teams?areas=2072", options)
+    fetch(checkTabActive, options)
     .then(status)
     .then(jsonData)
     .then(function(data) {
@@ -372,8 +453,30 @@ function getListTeam() {
 
             document.getElementById("daftartim").innerHTML = listTeam;
         });
+        checkRequestTeamSquad();
     })
     .catch(notifError);
+}
+
+function checkRequestTeamSquad() {
+
+    document.querySelectorAll('ul li').forEach(function(el) {
+        el.addEventListener('click', function(event) {
+            idTab = event.target.hash;
+             if (idTab === '#ligainggris' || idTab === '#klasmen') {
+                getListTeam();
+            } else if (idTab === '#ligajerman') {
+                getListTeam();
+            } else if (idTab === '#ligaperancis') {
+                getListTeam();
+            } else if (idTab === '#ligaspanyol') {
+                getListTeam();
+            } else if (idTab === '#ligabelanda'){
+                getListTeam();
+            }
+            console.log(idTab);
+        })
+    })
 }
 
 function getTeamById() {
@@ -425,9 +528,9 @@ function getTeamById() {
             <p><img src="${data.crestUrl}" width="100"></p>
             <p>Club: ${data.name}</p>
             <p>Stadium: ${data.venue}</p>
-            <p>Phone: ${data.phone}</p>
-            <p>Email: ${data.email}</p>
-            <p>Website: ${data.website}</p>
+            <p>Phone: <telp>${data.phone}</telp></p>
+            <p>Email: <a href = "mailto:${data.email}?subject = Information&body = 'Test'">${data.email}</a></p>
+            <p>Website: <a href="${data.website}">${data.website}</a></p>
             </div>
           </div>
           </div>
