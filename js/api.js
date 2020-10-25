@@ -1,32 +1,25 @@
 
 var base_url = "https://api.football-data.org/v2/";
-var inggris = document.getElementById("inggris");
-var perancis = document.getElementById("perancis");
-var jerman = document.getElementById("jerman");
-var belanda = document.getElementById("belanda");
-var spanyol = document.getElementById("spanyol");
-var champion = document.getElementById("champion");
+var idTab = "#ligainggris";
+var checkTabActive = "";
+var options = {
+    "headers": {
+        // "Access-Control-Allow-Methods": "GET",
+        // "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Headers": "x-auth-token, x-response-control",
+        // "Content-Length": 0,
+        // "Content-Type": "text/plain",
+        "X-Auth-Token": "41f41c43e0a04c5e9c29a32a0db463b3"
+    }
+};
+
 // https://api.football-data.org/v2/competitions/2021/matches?status=SCHEDULED = Premier League
 // https://api.football-data.org/v2/competitions/2001/matches?status=SCHEDULED = Champion League
 // https://api.football-data.org/v2/competitions/2002/matches?status=SCHEDULED = Liha Jerman
 // https://api.football-data.org/v2/competitions/2003/matches?status=SCHEDULED = Liha Belanda
 // https://api.football-data.org/v2/competitions/2014/matches?status=SCHEDULED = Liha Spanyol
 // https://api.football-data.org/v2/competitions/2015/matches?status=SCHEDULED = Liha Perancis
-// var checkTabActive = "";
-  
-// if (window.location.href === "#ligainggris") {
-//     checkTabActive = base_url + "competitions/2021/matches?status=SCHEDULED";
-// } else if (window.location.href === "#ligaperancis") {
-//     checkTabActive = base_url + "competitions/2015/matches?status=SCHEDULED";
-// } else if (window.location.href === "#ligajerman") {
-//     checkTabActive = base_url + "competitions/2002/matches?status=SCHEDULED";
-// } else if (window.location.href === "#ligabelanda") {
-//     checkTabActive = base_url + "competitions/2003/matches?status=SCHEDULED";
-// } else if (window.location.href === "#ligachampion") {
-//     checkTabActive = base_url + "competitions/2001/matches?status=SCHEDULED";
-// } else if (window.location.href === "#ligaspanyol") {
-//     checkTabActive = base_url + "competitions/2014/matches?status=SCHEDULED";
-// }
+
 
 function status(response) {
     if(response.status !== 200) {
@@ -59,11 +52,7 @@ function getScheduleCompetitions() {
         })
     }
    
-    fetch(base_url + "competitions/2021/matches?status=SCHEDULED", {
-        "headers": {
-            "X-Auth-Token": "41f41c43e0a04c5e9c29a32a0db463b3"
-        }
-    })
+    fetch(base_url + "competitions/2021/matches?status=SCHEDULED", options)
     .then(status)
     .then(jsonData)
     .then(function(data) {
@@ -115,11 +104,7 @@ function getTopScorers() {
         })
     }
 
-    fetch(base_url + "competitions/2021/scorers", {
-        "headers": {
-            "X-Auth-Token": "41f41c43e0a04c5e9c29a32a0db463b3"
-        }
-    })
+    fetch(base_url + "competitions/2021/scorers", options)
     .then(status)
     .then(jsonData)
     .then(function(data) {
@@ -182,18 +167,25 @@ function getClassmenLeague() {
         })
     }
 
-    
-   
-    fetch(base_url + "competitions/2021/standings", {
-        "headers": {
-            "X-Auth-Token": "41f41c43e0a04c5e9c29a32a0db463b3"
-        }
-    })
+    if (idTab === '#ligainggris' || idTab === '#klasmen') {
+        checkTabActive = base_url + "competitions/2021/standings";
+    } else if (idTab === '#ligajerman') {
+        checkTabActive = base_url + "competitions/2002/standings";
+    } else if (idTab === '#ligabelanda') {
+        checkTabActive = base_url + "competitions/2003/standings";
+    } else if (idTab === '#ligaspanyol') {
+        checkTabActive = base_url + "competitions/2014/standings";
+    } else if (idTab === '#ligaperancis') {
+        checkTabActive = base_url + "competitions/2015/standings";
+    } else if (idTab === '#ligachampion') {
+        checkTabActive = base_url + "competitions/2001/standings";
+    }
+
+    fetch(checkTabActive, options )
     .then(status)
     .then(jsonData)
     .then(function(data) {
         var classmenLeague = "";
-        
         data.standings[0].table.forEach(function(team, index) {
             const split = team.form.split(',');
             const edit = split.map(item => {
@@ -279,11 +271,49 @@ function getClassmenLeague() {
                 </tbody>
             </table>
             `;
-
             document.getElementById("klasmen").innerHTML = classmenLeague;
         });
+        checkRequestLeague();
     })
     .catch(notifError);
+}
+
+function checkRequestLeague() {
+
+    document.querySelectorAll('ul li').forEach(function(el) {
+        el.addEventListener('click', function(event) {
+            idTab = event.target.hash;
+             if (idTab === '#ligainggris' || idTab === '#klasmen') {
+                getClassmenLeague();
+            } else if (idTab === '#ligajerman') {
+                getClassmenLeague();
+            } else if (idTab === '#ligaperancis') {
+                getClassmenLeague();
+            } else if (idTab === '#ligachampion') {
+                getClassmenLeague();
+            } else if (idTab === '#ligaspanyol') {
+                getClassmenLeague();
+            } else if (idTab === '#ligabelanda'){
+                getClassmenLeague();
+            }
+            console.log(idTab);
+            // return;
+        })
+    })
+    
+    // if (idTab === '#ligainggris' || idTab === '#klasmen') {
+    //     getClassmenLeague();
+    // } else if (idTab === '#ligajerman') {
+    //     getClassmenLeague();
+    // } else if (idTab === '#ligabelanda') {
+    //     getClassmenLeague();
+    // } else if (idTab === '#ligaspanyol') {
+    //     getClassmenLeague();
+    // } else if (idTab === '#ligaperancis') {
+    //     getClassmenLeague();
+    // } else if (idTab === '#ligachampion') {
+    //     getClassmenLeague();
+    // }
 }
 
 function getListTeam() {
@@ -300,11 +330,8 @@ function getListTeam() {
     //     })
     // }
 
-    fetch(base_url + "teams?areas=2072", {
-        "headers": {
-            "X-Auth-Token": "41f41c43e0a04c5e9c29a32a0db463b3"
-        }
-    })
+
+    fetch(base_url + "teams?areas=2072", options)
     .then(status)
     .then(jsonData)
     .then(function(data) {
@@ -387,13 +414,22 @@ function getTeamById() {
       .then(function(data) {
   
           var teamHTML = `
+          <style>
+            .row {
+                margin-top: 2em;
+            }
+          </style>
+          <div class="row">
           <div class="card">
+            <div class="card-content">
             <p><img src="${data.crestUrl}" width="100"></p>
             <p>Club: ${data.name}</p>
             <p>Stadium: ${data.venue}</p>
             <p>Phone: ${data.phone}</p>
             <p>Email: ${data.email}</p>
             <p>Website: ${data.website}</p>
+            </div>
+          </div>
           </div>
             `;
             // <div class="card-content">

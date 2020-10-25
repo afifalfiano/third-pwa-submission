@@ -71,12 +71,4 @@ document.addEventListener('DOMContentLoaded', function() {
         xhttp.open("GET", "pages/" + page + ".html", true);
         xhttp.send();
     }
-    document.querySelectorAll('.tab').forEach(function(el) {
-        el.addEventListener("click", function(event) {
-            tab = event.target.getAttribute('id');
-            return tab;
-        })
-    })
 })
-
-
