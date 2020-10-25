@@ -317,12 +317,16 @@ function getListTeam() {
                 }
                 .card {
                     width: 200px;
-                    height: 290px;
+                    height: 300px;
                     padding: 20px;
                     padding-bottom: 0px;
                     margin: 0 auto;
                     margin-top: 0;
                     margin-bottom: 40px;
+                }
+                .text {
+                    font-size: 1.4em;
+                    font-height: 500;
                 }
                 </style>
                 <div class="col s12 lg3 m4">
