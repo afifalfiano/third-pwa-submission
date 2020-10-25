@@ -84,7 +84,17 @@ function getScheduleCompetitions() {
                 font-weight: 500;
                 text-transform: uppercase;
             }
+            .card {
+                width: 240px;
+                height: 340px;
+                padding: 20px;
+                padding-bottom: 0px;
+                margin: 0 auto;
+                margin-top: 0;
+                margin-bottom: 40px;
+            }
             </style>
+            <div class="col s12 m6 lg3">
             <div class="card">
                     <div class="card-content center">
                        <span class="card-title truncate center">Matchday ${team.matchday}</span>
@@ -104,6 +114,7 @@ function getScheduleCompetitions() {
                        <hr/>
                        <p class="league">${data.competition.name}</p>
                     </div>
+            </div>
             </div>
             `;
 
