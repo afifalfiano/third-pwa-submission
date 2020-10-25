@@ -1,0 +1,17 @@
+{
+  "name": "kabar-bola",
+  "version": "1.0.0",
+  "description": "Kabar Bola",
+  "main": "sw.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "@afifalfiano",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.29.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.12.0"
+  }
+}
