@@ -884,7 +884,6 @@ function getTeamById() {
 
 function getSavedTeamFavorit() {
     getAll().then(function(team) {
-        console.log(team);
         var teamHTML = "";
         team.forEach(function(tim) {
             teamHTML += `
@@ -904,24 +903,3 @@ function getSavedTeamFavorit() {
         document.getElementById("timfavorit").innerHTML = teamHTML;
     });
 }
-
-function getSavedTeamById() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var idParam = urlParams.get("id");
-    
-    var teamHTML = "";
-    getById(idParam).then(function(team) {
-        console.log(team);
-        // teamHTML += `
-        // <div class="card">
-        //   <p><img src="${team.crestUrl}" width="100"></p>
-        //   <p>Club: ${team.name}</p>
-        //   <p>Stadium: ${team.venue}</p>
-        //   <p>Phone: ${team.phone}</p>
-        //   <p>Email: ${team.email}</p>
-        //   <p>Website: ${team.website}</p>
-        // </div>`;
-        // document.getElementById("body-content").innerHTML = teamHTML;
-    });
-};
-

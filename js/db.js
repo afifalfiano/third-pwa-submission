@@ -42,6 +42,7 @@ function getById(id) {
           return store.get(id);
         })
         .then(function(team) {
+          console.log(team);
           resolve(team);
         });
     });
