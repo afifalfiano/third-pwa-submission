@@ -9,8 +9,11 @@
     <meta name="theme-color" content="#00897B">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <style>
+    <link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet"
+  />    
+  <style>
         #body-content {
             min-height: 100vh;
         }
@@ -47,8 +50,8 @@
     <script src="js/materialize.min.js"></script>
     <script src="js/api.js"></script>
 
-    <!-- <script src="js/idb.js"></script>
-    <script src="js/db.js"></script> -->
+    <script src="js/idb.js"></script>
+    <script src="js/db.js"></script>
 
     <script>
       // REGISTER SERVICE WORKER
@@ -68,7 +71,7 @@
       }
     document.addEventListener("DOMContentLoaded", function() {
     var urlParams = new URLSearchParams(window.location.search);
-    var isFromSaved = urlParams.get("saved");
+    var isFromSaved = urlParams.get("timfavorit");
     var save = document.getElementById("save");
 
     if (isFromSaved) {
@@ -76,16 +79,16 @@
         save.style.display = 'none';
         
         // ambil artikel lalu tampilkan
-        getSavedTeamById();
+        getSavedTeamById() 
     } else {
         var item = getTeamById();
     }
 
     save.onclick = function() {
       console.log("Tombol FAB di klik.");
-      // item.then(function(article) {
-      // //   saveForLater(article);
-      // });
+      item.then(function(tim) {
+        saveForLater(tim);
+      });
     };
   });
     </script>

@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </footer>
                 `;
                 if (page === "home") {
-                    getScheduleCompetitions()
+                    getScheduleCompetitions();
                 } else if (page === "timfavorit") {
                     getSavedTeamFavorit();
                 } else if (page === "topskor") {

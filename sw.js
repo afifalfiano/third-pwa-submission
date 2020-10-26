@@ -1,5 +1,4 @@
-const CACHE_NAME = "kabarbola-v1";
-
+const CACHE_NAME = "kabarbola-v2";
 var urlsToCache = [
     "/",
     "/nav.html",
@@ -14,6 +13,8 @@ var urlsToCache = [
     "js/materialize.min.js",
     "js/nav.js",
     "js/api.js",
+    "js/db.js",
+    "js/idb.js",
 ]
 
 self.addEventListener("install", function(event) {

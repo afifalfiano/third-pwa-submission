@@ -2,12 +2,8 @@ var base_url = "https://api.football-data.org/v2/";
 var idTab = "#ligainggris";
 var checkTabActive = "";
 var options = {
+    "mode": "cors",
     "headers": {
-        // "Access-Control-Allow-Methods": "GET",
-        // "Access-Control-Allow-Origin": "*",
-        // "Access-Control-Allow-Headers": "x-auth-token, x-response-control",
-        // "Content-Length": 0,
-        // "Content-Type": "text/plain",
         "X-Auth-Token": "41f41c43e0a04c5e9c29a32a0db463b3"
     }
 };
@@ -98,7 +94,6 @@ function getScheduleCompetitions() {
             
                         document.getElementById("jadwal").innerHTML = scheduleLeague;
                     });
-                    checkRequestSchedule();
                 });
             }
         })
@@ -156,7 +151,6 @@ function getScheduleCompetitions() {
             `;
             document.getElementById("jadwal").innerHTML = scheduleLeague;
         });
-        checkRequestSchedule();
     })
     .catch(notifError);
 }
@@ -889,73 +883,45 @@ function getTeamById() {
 }
 
 function getSavedTeamFavorit() {
-    // getAll().then(function(team) {
-    //     console.log(team);
-
-    //     var teamHTML = "";
-
-
-    // });
+    getAll().then(function(team) {
+        console.log(team);
+        var teamHTML = "";
+        team.forEach(function(tim) {
+            teamHTML += `
+            <div class="col s12 m3 lg3">
+            <div class="card center">
+                <div class="card-content">
+                <a href="./tim.html?id=${tim.id}">
+                <p class="card-title">${tim.name}</p></br>
+                <p><img src="${tim.crestUrl}" width="100"></p><br/>
+                <em class="card-title">${tim.venue}</em>
+                </a>
+                </div>
+            </div>
+            </div>
+            `;
+        });
+        document.getElementById("timfavorit").innerHTML = teamHTML;
+    });
 }
 
 function getSavedTeamById() {
     var urlParams = new URLSearchParams(window.location.search);
     var idParam = urlParams.get("id");
     
+    var teamHTML = "";
     getById(idParam).then(function(team) {
-        var teamHTML = `
-        <div class="card">
-          <p><img src="${team.crestUrl}" width="100"></p>
-          <p>Club: ${team.name}</p>
-          <p>Stadium: ${team.venue}</p>
-          <p>Phone: ${team.phone}</p>
-          <p>Email: ${team.email}</p>
-          <p>Website: ${team.website}</p>
-        </div>`;
-
-        team.squad.forEach(function(tim, index) {
-          if(tim.shirtNumber === null) {
-              tim.shirtNumber = 'Tidak diketahui';
-          };
-          
-          teamHTML += `
-          <style>
-          .width-number {
-              width: 6%;
-          }
-
-          .same-width {
-              width: 15%;
-          }
-          </style>
-          <table class="responsive-table highlight">
-              <thead>
-              <tr>
-                  <th>No</th>
-                  <th>Nama</th>
-                  <th>Negara</th>
-                  <th>Posisi</th>
-                  <th>Role</th>
-                  <th>Nomer Jersey</th>
-                  <th>Tanggal Lahir</th>
-              </tr>
-              </thead>
-
-              <tbody>
-              <tr>
-                  <td class="width-number">${index + 1}</td>
-                  <td class="same-width">${tim.name}</td>
-                  <td class="same-width">${tim.nationality}</td>
-                  <td class="same-width">${tim.position}</td>
-                  <td class="same-width">${tim.role}</td>
-                  <td class="same-width">${tim.shirtNumber}</td>
-                  <td class="same-width">${tim.dateOfBirth}</td>
-              </tr>
-              </tbody>
-          </table>
-          `;
-      });
-      document.getElementById("body-content").innerHTML = teamHTML;
+        console.log(team);
+        // teamHTML += `
+        // <div class="card">
+        //   <p><img src="${team.crestUrl}" width="100"></p>
+        //   <p>Club: ${team.name}</p>
+        //   <p>Stadium: ${team.venue}</p>
+        //   <p>Phone: ${team.phone}</p>
+        //   <p>Email: ${team.email}</p>
+        //   <p>Website: ${team.website}</p>
+        // </div>`;
+        // document.getElementById("body-content").innerHTML = teamHTML;
     });
 };
 
