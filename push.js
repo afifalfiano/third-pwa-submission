@@ -16,9 +16,11 @@ var pushSubscription = {
    "keys": {
        "p256dh": "BI5TM7HNk94gjGX/P+/LBqY8aztyyaRZwBxhO9luGYhW9cm9e6XL3yLUZ+71o4OkxXqelgMpLySAtqef6UtiQJ4=",
        "auth": "VPzjlEWO/jNqZRi313SiTg=="
-   }
+   },
+   "image" : './img/example.jpg',
+   "icon": './logo.png'
 };
-var payload = 'Selamat! Aplikasi Anda sudah dapat menerima push notifikasi!';
+var payload = 'Saksikan! Laga BigMatch! Manchester United vs Liverpool';
  
 var options = {
    gcmAPIKey: '46378783589',
