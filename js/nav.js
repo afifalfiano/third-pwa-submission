@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     getClassmenLeague();
                 } else if (page === "daftartim") {
                     getListTeam();
-                    testStream();
                 }
                 if (this.status = 200) {
                     content.innerHTML = xhttp.responseText
