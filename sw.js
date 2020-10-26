@@ -6,7 +6,7 @@ var urlsToCache = [
     "/index.html",
     "/pages/home.html",
     "/pages/daftartim.html",
-    "/pages/klasmen.html",
+    "/pages/klasmenall.html",
     "/pages/timfavorit.html",
     "/pages/topskor.html",
     "/tim.html",

@@ -12,14 +12,6 @@ var options = {
     }
 };
 
-// https://api.football-data.org/v2/competitions/2021/matches?status=SCHEDULED = Premier League
-// https://api.football-data.org/v2/competitions/2001/matches?status=SCHEDULED = Champion League
-// https://api.football-data.org/v2/competitions/2002/matches?status=SCHEDULED = Liha Jerman
-// https://api.football-data.org/v2/competitions/2003/matches?status=SCHEDULED = Liha Belanda
-// https://api.football-data.org/v2/competitions/2014/matches?status=SCHEDULED = Liha Spanyol
-// https://api.football-data.org/v2/competitions/2015/matches?status=SCHEDULED = Liha Perancis
-
-
 function status(response) {
     if(response.status !== 200) {
         console.log("Error: " + response.status);
@@ -38,21 +30,8 @@ function notifError(error) {
 }
 
 function getScheduleCompetitions() {
-    if ("caches" in window) {
-        caches.match(base_url + "competitions/2021/matches?status=SCHEDULED").then(function(response){
-            if(response) {
-                response.json().then(function(data) {
-                    var scheduleLeague = "";
-                    data.matches.forEach(function(schedule) {
-                        // console.log(schedule);
-                    })
-                });
-            }
-        })
-    }
-
     checkTabActive = base_url + "competitions/2021/matches?status=SCHEDULED";
-    if (idTab === '#ligainggris' || idTab === '#klasmen') {
+    if (idTab === '#ligainggris' || idTab === '#home') {
         checkTabActive = base_url + "competitions/2021/matches?status=SCHEDULED";
     } else if (idTab === '#ligajerman') {
         checkTabActive = base_url + "competitions/2002/matches?status=SCHEDULED";
@@ -65,13 +44,72 @@ function getScheduleCompetitions() {
     } else if (idTab === '#ligachampion') {
         checkTabActive = base_url + "competitions/2001/matches?status=SCHEDULED";
     }
+
+    if ("caches" in window) {
+        caches.match(checkTabActive).then(function(response){
+            if(response) {
+                response.json().then(function(data) {
+                    var scheduleLeague = "";
+                    data.matches.splice(15, 322);
+                    data.matches.forEach(function(team) {
+                        const dateParse = new Date(team.utcDate);
+                        const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        const parse = dateParse.toLocaleDateString("id-ID", optionsDate);
+                        scheduleLeague += `
+                        <style>
+                        .league {
+                            padding-top: 15px;
+                            font-weight: 500;
+                            text-transform: uppercase;
+                        }
+                        .card {
+                            width: 240px;
+                            height: 340px;
+                            padding: 20px;
+                            padding-bottom: 0px;
+                            margin: 0 auto;
+                            margin-top: 0;
+                            margin-bottom: 40px;
+                        }
+                        </style>
+                        <div class="col s12 m4 lg4">
+                        <div class="card">
+                                <div class="card-content center">
+                                   <span class="card-title truncate center">Matchday ${team.matchday}</span>
+                                   <p> 
+                                        <a href="./tim.html?id=${team.awayTeam.id}">
+                                        <span>${team.homeTeam.name}</span>
+                                        </a>
+                                   </p>
+                                    <p>Vs</p>
+                                    <p>
+                                        <a href="./tim.html?id=${team.awayTeam.id}">
+                                        <span>${team.awayTeam.name}</span>
+                                        </a>
+                                   </p>
+                                   <hr/>
+                                   <p>${parse}</p>
+                                   <hr/>
+                                   <p class="league">${data.competition.name}</p>
+                                </div>
+                        </div>
+                        </div>
+                        `;
+            
+                        document.getElementById("jadwal").innerHTML = scheduleLeague;
+                    });
+                    checkRequestSchedule();
+                });
+            }
+        })
+    }
    
     fetch(checkTabActive, options)
     .then(status)
     .then(jsonData)
     .then(function(data) {
         var scheduleLeague = "";
-        
+        data.matches.splice(15, 322);
         data.matches.forEach(function(team) {
             const dateParse = new Date(team.utcDate);
             const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -93,7 +131,7 @@ function getScheduleCompetitions() {
                 margin-bottom: 40px;
             }
             </style>
-            <div class="col s12 m6 lg3">
+            <div class="col s12 m4 lg4">
             <div class="card">
                     <div class="card-content center">
                        <span class="card-title truncate center">Matchday ${team.matchday}</span>
@@ -116,7 +154,6 @@ function getScheduleCompetitions() {
             </div>
             </div>
             `;
-
             document.getElementById("jadwal").innerHTML = scheduleLeague;
         });
         checkRequestSchedule();
@@ -129,7 +166,7 @@ function checkRequestSchedule() {
     document.querySelectorAll('ul li').forEach(function(el) {
         el.addEventListener('click', function(event) {
             idTab = event.target.hash;
-             if (idTab === '#ligainggris' || idTab === '#klasmen') {
+             if (idTab === '#ligainggris' || idTab === '#home') {
                 getScheduleCompetitions();
             } else if (idTab === '#ligajerman') {
                 getScheduleCompetitions();
@@ -148,20 +185,8 @@ function checkRequestSchedule() {
 }
 
 function getTopScorers() {
-    // if ("caches" in window) {
-    //     caches.match(base_url + "competitions/2021/scorers").then(function(response){
-    //         if(response) {
-    //             response.json().then(function(data) {
-    //                 var scheduleLeague = "";
-    //                 data.scorers.forEach(function(schedule) {
-    //                     console.log(schedule);
-    //                 })
-    //             });
-    //         }
-    //     })
-    // }
     checkTabActive = base_url + "competitions/2021/scorers";
-    if (idTab === '#ligainggris' || idTab === '#klasmen') {
+    if (idTab === '#ligainggris' || idTab === '#topskor') {
         checkTabActive = base_url + "competitions/2021/scorers";
     } else if (idTab === '#ligajerman') {
         checkTabActive = base_url + "competitions/2002/scorers";
@@ -174,14 +199,62 @@ function getTopScorers() {
     } else if (idTab === '#ligachampion') {
         checkTabActive = base_url + "competitions/2001/scorers";
     }
+    if ("caches" in window) {
+        caches.match(checkTabActive).then(function(response){
+            if(response) {
+                response.json().then(function(data) {
+                    var topScorer = "";
+                    data.scorers.forEach(function(scorer, index) {
+                        topScorer += `
+                        <style>
+                        .same-width{
+                            width: 15%;
+                        }
+            
+                        .index-number {
+                            width: 6%;
+                        }
+                        </style>
+                        <table class="responsive-table highlight">
+                            <thead>
+                            <tr>
+                                <th >No</th>
+                                <th >Nama</th>
+                                <th >Negara</th>
+                                <th >Club</th>
+                                <th >Posisi</th>
+                                <th >Total Gol</th>
+                            </tr>
+                            </thead>
+            
+                            <tbody>
+                            <tr>
+                                <td class="index-number">${index + 1}</td>
+                                <td class="same-width">${scorer.player.name}</td>
+                                <td class="same-width">${scorer.player.nationality}</td>
+                                <td class="same-width">
+                                <a href="./tim.html?id=${scorer.team.id}">${scorer.team.name}</a>
+                                </td>
+                                <td class="same-width">${scorer.player.position}</td>
+                                <td class="same-width">${scorer.numberOfGoals} Gol</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        `;
+            
+                        document.getElementById("topskorer").innerHTML = topScorer;
+                    });
+                    checkRequestTopScorer();
+                });
+            }
+        })
+    }
 
     fetch(checkTabActive, options)
     .then(status)
     .then(jsonData)
     .then(function(data) {
-        var topScorer = `
-        
-        `;
+        var topScorer = "";
         data.scorers.forEach(function(scorer, index) {
             topScorer += `
             <style>
@@ -210,7 +283,9 @@ function getTopScorers() {
                     <td class="index-number">${index + 1}</td>
                     <td class="same-width">${scorer.player.name}</td>
                     <td class="same-width">${scorer.player.nationality}</td>
-                    <td class="same-width">${scorer.team.name}</td>
+                    <td class="same-width">
+                    <a href="./tim.html?id=${scorer.team.id}">${scorer.team.name}</a>
+                    </td>
                     <td class="same-width">${scorer.player.position}</td>
                     <td class="same-width">${scorer.numberOfGoals} Gol</td>
                 </tr>
@@ -230,7 +305,7 @@ function checkRequestTopScorer() {
     document.querySelectorAll('ul li').forEach(function(el) {
         el.addEventListener('click', function(event) {
             idTab = event.target.hash;
-             if (idTab === '#ligainggris' || idTab === '#klasmen') {
+             if (idTab === '#ligainggris' || idTab === '#topskor') {
                 getTopScorers();
             } else if (idTab === '#ligajerman') {
                 getTopScorers();
@@ -248,20 +323,8 @@ function checkRequestTopScorer() {
 }
 
 function getClassmenLeague() {
-    if ("caches" in window) {
-        caches.match(base_url + "competitions/2021/standings").then(function(response){
-            if(response) {
-                response.json().then(function(data) {
-                    var classmenLeague = "";
-                    // data.scorers.forEach(function(schedule) {
-                    //     console.log(schedule);
-                    // })
-                });
-            }
-        })
-    }
     checkTabActive = base_url + "competitions/2021/standings";
-    if (idTab === '#ligainggris' || idTab === '#klasmen') {
+    if (idTab === '#ligainggris' || idTab === '#klasmenall') {
         checkTabActive = base_url + "competitions/2021/standings";
     } else if (idTab === '#ligajerman') {
         checkTabActive = base_url + "competitions/2002/standings";
@@ -274,12 +337,110 @@ function getClassmenLeague() {
     } else if (idTab === '#ligachampion') {
         checkTabActive = base_url + "competitions/2001/standings";
     }
+    if ("caches" in window) {
+        caches.match(checkTabActive).then(function(response){
+            if(response) {
+                response.json().then(function(data) {
+                    var klasmenLiga = "";
+                    data.standings[0].table.forEach(function(team, index) {
+                        const split = team.form.split(',');
+                        const edit = split.map(item => {
+                            if (item === 'W') {
+                                item = `
+                                <span class="W">W</span>
+                                `;
+                            } else if (item === 'D') {
+                                item = `
+                                <span class="D">D</span>
+                                `;
+                            } else if (item === 'L') {
+                                item = `
+                                <span class="L">L</span>
+                                `;
+                            } 
+                            return item;
+                        });
+                        klasmenLiga += `
+                        <style>
+                        .same-width{
+                            width: 10%;
+                        }
+                        .same-width-form {
+                            width: 20%;
+                        }
+                        .index-number {
+                            width: 6%;
+                        }
+                        .club {
+                            width: 20%;
+                        }
+                        .D{
+                            background-color: blue;
+                            padding-top:3px;
+                            padding-bottom:3px;
+                            padding-left:5px;
+                            padding-right:5px;
+                            color: white;
+                            border-radius: 5px;
+                        }
+                        .W{
+                            background-color: green;
+                            padding: 3px;
+                            color: white;
+                            border-radius: 5px;
+                        }
+                        .L{
+                            background-color: red;
+                            padding-left: 5px;
+                            padding-right: 5px;
+                            padding-top: 3px;
+                            padding-bottom: 3px;
+                            color: white;
+                            border-radius: 5px;
+                        }
+                        
+                        </style>
+                        <table class="responsive-table highlight">
+                            <thead>
+                            <tr>
+                                <th >No</th>
+                                <th >Club</th>
+                                <th >Permainan Terkahir</th>
+                                <th >Menang</th>
+                                <th >Kalah</th>
+                                <th >Seri</th>
+                                <th >Total Gol</th>
+                                <th >Point</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="index-number">${index + 1}</td>
+                                <td class="club"><a href="./tim.html?id=${team.team.id}"><img src="${team.team.crestUrl}" alt="${team.team.name}" width="30"/> ${team.team.name}</a></td>
+                                <td class="same-width-form">${edit}</td>
+                                <td class="same-width">${team.won}</td>
+                                <td class="same-width">${team.lost}</td>
+                                <td class="same-width">${team.draw}</td>
+                                <td class="same-width">${team.goalsFor} Gol</td>
+                                <td class="same-width">${team.points}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        `;
+                        document.getElementById("klasmenclub").innerHTML = klasmenLiga;
+                    });
+                    checkRequestLeague();
+                });
+            }
+        })
+    }
+    
 
     fetch(checkTabActive, options )
     .then(status)
     .then(jsonData)
     .then(function(data) {
-        var classmenLeague = "";
+        var klasmenLiga = "";
         data.standings[0].table.forEach(function(team, index) {
             const split = team.form.split(',');
             const edit = split.map(item => {
@@ -298,7 +459,7 @@ function getClassmenLeague() {
                 } 
                 return item;
             });
-            classmenLeague += `
+            klasmenLiga += `
             <style>
             .same-width{
                 width: 10%;
@@ -365,7 +526,7 @@ function getClassmenLeague() {
                 </tbody>
             </table>
             `;
-            document.getElementById("klasmen").innerHTML = classmenLeague;
+            document.getElementById("klasmenclub").innerHTML = klasmenLiga;
         });
         checkRequestLeague();
     })
@@ -373,11 +534,11 @@ function getClassmenLeague() {
 }
 
 function checkRequestLeague() {
-
+    
     document.querySelectorAll('ul li').forEach(function(el) {
         el.addEventListener('click', function(event) {
             idTab = event.target.hash;
-             if (idTab === '#ligainggris' || idTab === '#klasmen') {
+             if (idTab === '#ligainggris' || idTab === '#klasmenall') {
                 getClassmenLeague();
             } else if (idTab === '#ligajerman') {
                 getClassmenLeague();
@@ -397,20 +558,8 @@ function checkRequestLeague() {
 }
 
 function getListTeam() {
-    // if ("caches" in window) {
-    //     caches.match(base_url + "teams?areas=2072").then(function(response){
-    //         if(response) {
-    //             // response.json().then(function(data) {
-    //             //     var scheduleLeague = "";
-    //             //     data.scorers.forEach(function(schedule) {
-    //             //         console.log(schedule);
-    //             //     })
-    //             // });
-    //         }
-    //     })
-    // }
     checkTabActive = base_url + "teams?areas=2072";
-    if (idTab === '#ligainggris' || idTab === '#klasmen') {
+    if (idTab === '#ligainggris' || idTab === '#daftartim') {
         checkTabActive = base_url + "teams?areas=2072";
     } else if (idTab === '#ligajerman') {
         checkTabActive = base_url + "teams?areas=2088";
@@ -421,6 +570,54 @@ function getListTeam() {
     } else if (idTab === '#ligaperancis') {
         checkTabActive = base_url + "teams?areas=2081";
     } 
+
+    if ("caches" in window) {
+        caches.match(checkTabActive).then(function(response){
+            if(response) {
+                response.json().then(function(data) {
+                    var listTeam = "";
+                    data.teams.forEach(function(tim) {
+                        listTeam += `
+                            <style>
+                            .row .club {
+                                margin-top: 0;
+                            }
+                            .card {
+                                width: 200px;
+                                height: 300px;
+                                padding: 20px;
+                                padding-bottom: 0px;
+                                margin: 0 auto;
+                                margin-top: 0;
+                                margin-bottom: 40px;
+                            }
+                            .text {
+                                font-size: 1.4em;
+                                font-height: 500;
+                            }
+                            </style>
+                            <div class="col s12 lg3 m4">
+                            <div class="card">
+                                <div class="card-image">
+                                <a href="./tim.html?id=${tim.id}">
+                                <img src="${tim.crestUrl}" alt="${tim.name}" class="responsive-img">
+                                </div>
+                                <div class="card-content">
+                                <p class="text center">${tim.name}</p>
+                                </div>
+                                </a>
+                            </div>
+                            </div>
+                        `;
+            
+                        document.getElementById("daftartim").innerHTML = listTeam;
+                    });
+                    checkRequestTeamSquad();
+                });
+            }
+        })
+    }
+
 
     fetch(checkTabActive, options)
     .then(status)
@@ -473,7 +670,7 @@ function checkRequestTeamSquad() {
     document.querySelectorAll('ul li').forEach(function(el) {
         el.addEventListener('click', function(event) {
             idTab = event.target.hash;
-             if (idTab === '#ligainggris' || idTab === '#klasmen') {
+             if (idTab === '#ligainggris' || idTab === '#daftartim') {
                 getListTeam();
             } else if (idTab === '#ligajerman') {
                 getListTeam();
@@ -498,21 +695,95 @@ function getTeamById() {
           caches.match(base_url + "teams/" + idParam).then(function(response) {
             if (response) {
               response.json().then(function(data) {
-            //     var articleHTML = `
-            //     <div class="card">
-            //       <div class="card-image waves-effect waves-block waves-light">
-            //         <img src="${data.result.cover}" />
-            //       </div>
-            //       <div class="card-content">
-            //         <span class="card-title">${data.result.post_title}</span>
-            //         ${snarkdown(data.result.post_content)}
-            //       </div>
-            //     </div>
-            //   `;
-            //     document.getElementById("body-content").innerHTML = articleHTML;
-                // Kirim objek data hasil parsing json agar bisa disimpan ke indexed db
-                resolve(data);
-              });
+  
+                var teamHTML = `
+                <style>
+                  .row {
+                      margin-top: 2em;
+                  }
+                </style>
+                <div class="row">
+                <div class="card">
+                  <div class="card-content">
+                  <p><img src="${data.crestUrl}" width="100"></p>
+                  <p>Club: ${data.name}</p>
+                  <p>Stadium: ${data.venue}</p>
+                  <p>Phone: <telp>${data.phone}</telp></p>
+                  <p>Email: <a href = "mailto:${data.email}?subject = Information&body = 'Test'">${data.email}</a></p>
+                  <p>Website: <a href="${data.website}">${data.website}</a></p>
+                  </div>
+                </div>
+                </div>
+                  `;
+                  data.squad.forEach(function(player, index) {
+                      const dateParse = new Date(player.dateOfBirth);
+                      const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                      const parse = dateParse.toLocaleDateString("id-ID", optionsDate);
+                      if(player.shirtNumber === null) {
+                          player.shirtNumber = 'Tidak diketahui';
+                      };
+                      
+                      teamHTML += `
+                      <style>
+                      .width-number {
+                          width: 6%;
+                      }
+      
+                      .same-width {
+                          width: 15%;
+                      }
+                      </style>
+                      <table class="responsive-table highlight">
+                          <thead>
+                          <tr>
+                              <th>No</th>
+                              <th>Nama</th>
+                              <th>Negara</th>
+                              <th>Posisi</th>
+                              <th>Role</th>
+                              <th>Nomer Jersey</th>
+                              <th>Tanggal Lahir</th>
+                          </tr>
+                          </thead>
+      
+                          <tbody>
+                          <tr>
+                              <td class="width-number">${index + 1}</td>
+                              <td class="same-width">${player.name}</td>
+                              <td class="same-width">${player.nationality}</td>
+                              <td class="same-width">${player.position}</td>
+                              <td class="same-width">${player.role}</td>
+                              <td class="same-width">${player.shirtNumber}</td>
+                              <td class="same-width">${parse}</td>
+                          </tr>
+                          </tbody>
+                      </table>
+                      `;
+                  })
+                  var footerTeam = `
+                  <style>
+                  footer {
+                      margin-top: 20px;
+                      bottom:0;
+                      left:0;
+                  }
+                  .page-footer {
+                      padding-top: 0;
+                      width: 100%;
+                  }
+                  </style>
+                  <footer class="page-footer  teal darken-3">
+                      <div class="footer-copyright teal darken-3">
+                      <div class="container">
+                      © 2020 Copyright all reserved by Afif Alfiano
+                      </div>
+                      </div>
+                  </footer>            
+                  `;
+              document.getElementById("body-content").innerHTML = teamHTML;
+              document.getElementById("footer-content").innerHTML = footerTeam;
+              resolve(data);
+            });
             }
           });
         } 
@@ -642,7 +913,7 @@ function getSavedTeamById() {
           <p>Website: ${team.website}</p>
         </div>`;
 
-      team.squad.forEach(function(tim, index) {
+        team.squad.forEach(function(tim, index) {
           if(tim.shirtNumber === null) {
               tim.shirtNumber = 'Tidak diketahui';
           };
@@ -687,3 +958,4 @@ function getSavedTeamById() {
       document.getElementById("body-content").innerHTML = teamHTML;
     });
 };
+

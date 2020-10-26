@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     getSavedTeamFavorit();
                 } else if (page === "topskor") {
                     getTopScorers()
-                } else if (page === "klasmen") {
+                } else if (page === "klasmenall") {
                     getClassmenLeague();
                 } else if (page === "daftartim") {
                     getListTeam();
