@@ -2,6 +2,7 @@
     "name": "Kabar Bola",
     "short_name": "Karbol",
     "description": "Aplikasi Informasi Sepak Bola",
+    "gcm_sender_id": "46378783589",
     "start_url": "/index.html",
     "display": "standalone",
     "scope": "/",
