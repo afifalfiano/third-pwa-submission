@@ -1,8 +1,8 @@
 var webPush = require('web-push');
  
 const vapidKeys = {
-   "publicKey": "BIkthC_plCpXzHjwhgBUaAcVzaM5UFTxYFWWeKAg256L8I8SwtEitz4rCi1uQdzDfjgaedasyRKreofql5NSK9w",
-   "privateKey": "ryo4E18isMa1YoV3Ylxvch7NSPIuEBWji5M1WDRZQMM"
+   "publicKey": "BAckMDM1k-jKGDOin_FJD7QwC6j1JzZTquIKYBphUXua3Idsu_3CtuLS6kNKT5uPT3KNWcOPsIa7yoo7tDv2NxQ",
+   "privateKey": "zge_qm71d_MIHbFl2q-NYT2OYl0H9nj-mv_FKXPkhdc"
 };
  
  
@@ -12,10 +12,10 @@ webPush.setVapidDetails(
    vapidKeys.privateKey
 )
 var pushSubscription = {
-   "endpoint": "https://fcm.googleapis.com/fcm/send/ezihfX5hnxQ:APA91bG2m1TszO-WsTjBmd_UKVCBLmPVJ6OAF8arxec6e9rYXPVFK2QtBrm7f8l9k6qOQBqfaR3MMQwwgx03gyAK1Nw7am6gFKKX-uPGVSyLmFSI4e8TPbIxJNE8dbRvDJv5d7XQikeU",
+   "endpoint": "https://fcm.googleapis.com/fcm/send/d-VJNiooeZw:APA91bEKEj9PS0LnShkgNut-PwtmjcInjRGeyuovkWWI5opmNmgJDk96hv0QGq63kNxnM7g7Z0oqSELT2pafF4EAZPQD02GVoKDuSoRq7dtpf1AllhDQiQ4bR7yGiCFTdwH38albYRz4",
    "keys": {
-       "p256dh": "BBWBOhWvOLuPf0UCr2gNXDXYe0ipGLxTTI8AAszGGXAwzuiCDxSTiqNkKkj6LAo51d4nmYRUYySrt6SGE3/LGVI=",
-       "auth": "vbzpLaKRqeHZpAhucR46pw=="
+       "p256dh": "BPb34Fwv+akiRgW4av7mcEVCehKy0YzqcQ5ye1BcD2oOTQ/8WtTI2mc2mhJU2RlEuMOksn9ZqiIaRoAXTp9BEZ8=",
+       "auth": "vpM6v32DQDT7ebvrB2p8Zw=="
    }
 };
 var payload = "Saksikan! Laga BigMatch! Manchester United vs Liverpool";
