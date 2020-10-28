@@ -26,6 +26,7 @@ function notifError(error) {
 }
 
 function getScheduleCompetitions() {
+    
     checkTabActive = base_url + "competitions/2021/matches?status=SCHEDULED";
     if (idTab === '#ligainggris' || idTab === '#home') {
         checkTabActive = base_url + "competitions/2021/matches?status=SCHEDULED";
@@ -784,11 +785,7 @@ function getTeamById() {
           });
         } 
   
-      fetch(base_url + "teams/" + idParam, {
-        "headers": {
-            "X-Auth-Token": "41f41c43e0a04c5e9c29a32a0db463b3"
-        }
-      })
+      fetch(base_url + "teams/" + idParam, options)
       .then(status)
       .then(jsonData)
       .then(function(data) {
