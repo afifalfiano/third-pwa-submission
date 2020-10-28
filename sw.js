@@ -15,6 +15,13 @@ var urlsToCache = [
     "js/api.js",
     "js/db.js",
     "js/idb.js",
+    "https://fonts.googleapis.com/icon?family=Material+Icons",
+    "/manifest.json",
+    "/icon.png",
+    "/apple-touch-icon.png",
+    "/icon-512x512.png",
+    
+    
 ]
 
 self.addEventListener("install", function(event) {

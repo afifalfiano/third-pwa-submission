@@ -5,6 +5,22 @@ var dbPromised = idb.open("kabarbola", 1, function(upgradeDb) {
     teamObjectStore.createIndex("shortName", "shortName", {unique: false});
 });
 
+function checkData(team) {
+    return new Promise((resolve, reject) => {
+        dbPromised
+        .then(function(db) {
+            var tx = db.transaction("teams", "readonly");
+            var store = tx.objectStore("teams");
+            return store.get(team.id);
+        })
+        .then(function(data){
+            console.log(data);
+            resolve(data);
+        })
+    })
+    
+}
+
 function saveForLater(team) {
     dbPromised
     .then(function(db) {
@@ -16,6 +32,17 @@ function saveForLater(team) {
     })
     .then(function() {
         M.toast({html: 'Tim Berhasil disimpan!'});
+    })
+}
+
+function deleteItem(team) {
+    dbPromised.then(function(db) {
+        var tx = db.transaction('teams', "readwrite");
+        var store = tx.objectStore("teams");
+        store.delete(team.id);
+        return tx.complete;
+    }).then(function() {
+        M.toast({html: 'Tim Berhasil dihapus!'});
     })
 }
 

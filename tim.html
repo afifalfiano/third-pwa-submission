@@ -38,15 +38,17 @@
     <div id="footer-content"></div>
 
     <div class="fixed-action-btn">
-      <a class="btn-floating btn-large red" id="save">
+      <a class="btn-floating waves-effect waves btn-large red" id="save">
         <i class="large material-icons">save</i>
       </a>
     </div>
 
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js"
-    ></script>
+    <div class="fixed-action-btn">
+      <a class="btn-floating waves-effect waves btn-large red" id="delete">
+        <i class="large material-icons">delete</i>
+      </a>
+    </div>
+
     <script src="js/materialize.min.js"></script>
     <script src="js/api.js"></script>
 
@@ -73,21 +75,38 @@
     var urlParams = new URLSearchParams(window.location.search);
     var isFromSaved = urlParams.get("timfavorit");
     var save = document.getElementById("save");
+    var del = document.getElementById("delete");
 
     if (isFromSaved) {
         // Hide fab jika dimuat dari indexed db
         save.style.display = 'none';
+        del.style.display = 'none';
         
     } else {
         var item = getTeamById();
     }
 
-    save.onclick = function() {
-      console.log("Tombol FAB di klik.");
-      item.then(function(tim) {
-        saveForLater(tim);
-      });
-    };
+    item.then(function(tim) {
+      checkData(tim).then(function(cek) {
+        console.log(cek);
+        if (cek === null || cek === undefined) {
+          del.style.display = 'none';
+          save.onclick = function() {
+                console.log("Tombol FAB di klik.");
+                  saveForLater(tim);
+                  location.reload(true);
+          };
+        } else {
+          save.style.display = 'none';
+          del.onclick = function() {
+              console.log('Tombol Delete di klik');
+              deleteItem(tim);
+              location.reload(true);
+          }
+        }
+      })
+      
+    });
   });
     </script>
   </body>

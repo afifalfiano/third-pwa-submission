@@ -94,6 +94,7 @@ function getScheduleCompetitions() {
             
                         document.getElementById("jadwal").innerHTML = scheduleLeague;
                     });
+                    checkRequestSchedule();
                 });
             }
         })
@@ -151,6 +152,7 @@ function getScheduleCompetitions() {
             `;
             document.getElementById("jadwal").innerHTML = scheduleLeague;
         });
+        checkRequestSchedule();
     })
     .catch(notifError);
 }
@@ -884,22 +886,34 @@ function getTeamById() {
 
 function getSavedTeamFavorit() {
     getAll().then(function(team) {
+        console.log(team);
         var teamHTML = "";
-        team.forEach(function(tim) {
+        if (team.length !== 0 && team.length !== -1) {
+            team.forEach(function(tim) {
+                teamHTML += `
+                <div class="col s12 m3 lg3">
+                <div class="card center">
+                    <div class="card-content">
+                    <a href="./tim.html?id=${tim.id}">
+                    <p class="card-title">${tim.name}</p></br>
+                    <p><img src="${tim.crestUrl}" width="100"></p><br/>
+                    <em class="card-title">${tim.venue}</em>
+                    </a>
+                    </div>
+                </div>
+                </div>
+                `;
+            });
+        } else {
             teamHTML += `
-            <div class="col s12 m3 lg3">
-            <div class="card center">
-                <div class="card-content">
-                <a href="./tim.html?id=${tim.id}">
-                <p class="card-title">${tim.name}</p></br>
-                <p><img src="${tim.crestUrl}" width="100"></p><br/>
-                <em class="card-title">${tim.venue}</em>
-                </a>
+            <div class="col s12 m12 lg12">
+                <div class="card center">
+                    <div class="card-content">Tidak ada tim favorit!</div>
                 </div>
             </div>
-            </div>
             `;
-        });
+        }
         document.getElementById("timfavorit").innerHTML = teamHTML;
+        
     });
 }
