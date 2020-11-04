@@ -43,12 +43,13 @@ function getScheduleCompetitions() {
     }
 
     if ("caches" in window) {
-        caches.match(checkTabActive).then(function(response){
+        caches.match(checkTabActive).then((response) => {
             if(response) {
-                response.json().then(function(data) {
+                response.json().then((data) => {
+                    document.getElementById("loading").innerHTML = '';
                     var scheduleLeague = "";
                     data.matches.splice(15, 322);
-                    data.matches.forEach(function(team) {
+                    data.matches.forEach((team) => {
                         const dateParse = new Date(team.utcDate);
                         const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         const parse = dateParse.toLocaleDateString("id-ID", optionsDate);
@@ -104,10 +105,11 @@ function getScheduleCompetitions() {
     fetch(checkTabActive, options)
     .then(status)
     .then(jsonData)
-    .then(function(data) {
+    .then((data) => {
+        document.getElementById("loading").innerHTML = '';
         var scheduleLeague = "";
         data.matches.splice(15, 322);
-        data.matches.forEach(function(team) {
+        data.matches.forEach((team) => {
             const dateParse = new Date(team.utcDate);
             const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const parse = dateParse.toLocaleDateString("id-ID", optionsDate);
@@ -160,8 +162,8 @@ function getScheduleCompetitions() {
 
 function checkRequestSchedule() {
 
-    document.querySelectorAll('ul li').forEach(function(el) {
-        el.addEventListener('click', function(event) {
+    document.querySelectorAll('ul li').forEach((el) => {
+        el.addEventListener('click', (event) => {
             idTab = event.target.hash;
              if (idTab === '#ligainggris' || idTab === '#home') {
                 getScheduleCompetitions();
@@ -197,11 +199,12 @@ function getTopScorers() {
         checkTabActive = base_url + "competitions/2001/scorers";
     }
     if ("caches" in window) {
-        caches.match(checkTabActive).then(function(response){
+        caches.match(checkTabActive).then((response) => {
             if(response) {
-                response.json().then(function(data) {
+                response.json().then((data) => {
+                    document.getElementById("loading").innerHTML = '';
                     var topScorer = "";
-                    data.scorers.forEach(function(scorer, index) {
+                    data.scorers.forEach((scorer, index) => {
                         topScorer += `
                         <style>
                         .same-width{
@@ -250,9 +253,10 @@ function getTopScorers() {
     fetch(checkTabActive, options)
     .then(status)
     .then(jsonData)
-    .then(function(data) {
+    .then((data) => {
+        document.getElementById("loading").innerHTML = '';
         var topScorer = "";
-        data.scorers.forEach(function(scorer, index) {
+        data.scorers.forEach((scorer, index) => {
             topScorer += `
             <style>
             .same-width{
@@ -299,8 +303,8 @@ function getTopScorers() {
 
 function checkRequestTopScorer() {
 
-    document.querySelectorAll('ul li').forEach(function(el) {
-        el.addEventListener('click', function(event) {
+    document.querySelectorAll('ul li').forEach((el) => {
+        el.addEventListener('click', (event) => {
             idTab = event.target.hash;
              if (idTab === '#ligainggris' || idTab === '#topskor') {
                 getTopScorers();
@@ -335,11 +339,12 @@ function getClassmenLeague() {
         checkTabActive = base_url + "competitions/2001/standings";
     }
     if ("caches" in window) {
-        caches.match(checkTabActive).then(function(response){
+        caches.match(checkTabActive).then((response) => {
             if(response) {
-                response.json().then(function(data) {
+                response.json().then((data) => {
+                    document.getElementById("loading").innerHTML = '';
                     var klasmenLiga = "";
-                    data.standings[0].table.forEach(function(team, index) {
+                    data.standings[0].table.forEach((team, index) => {
                         const split = team.form.split(',');
                         const edit = split.map(item => {
                             if (item === 'W') {
@@ -436,9 +441,10 @@ function getClassmenLeague() {
     fetch(checkTabActive, options )
     .then(status)
     .then(jsonData)
-    .then(function(data) {
+    .then((data) => {
+        document.getElementById("loading").innerHTML = '';
         var klasmenLiga = "";
-        data.standings[0].table.forEach(function(team, index) {
+        data.standings[0].table.forEach((team, index) => {
             const split = team.form.split(',');
             const edit = split.map(item => {
                 if (item === 'W') {
@@ -532,8 +538,8 @@ function getClassmenLeague() {
 
 function checkRequestLeague() {
     
-    document.querySelectorAll('ul li').forEach(function(el) {
-        el.addEventListener('click', function(event) {
+    document.querySelectorAll('ul li').forEach((el) => {
+        el.addEventListener('click', (event) => {
             idTab = event.target.hash;
              if (idTab === '#ligainggris' || idTab === '#klasmenall') {
                 getClassmenLeague();
@@ -569,11 +575,12 @@ function getListTeam() {
     } 
 
     if ("caches" in window) {
-        caches.match(checkTabActive).then(function(response){
+        caches.match(checkTabActive).then((response) => {
             if(response) {
-                response.json().then(function(data) {
+                response.json().then((data) => {
+                    document.getElementById("loading").innerHTML = '';
                     var listTeam = "";
-                    data.teams.forEach(function(tim) {
+                    data.teams.forEach((tim) => {
                         listTeam += `
                             <style>
                             .row .club {
@@ -619,9 +626,10 @@ function getListTeam() {
     fetch(checkTabActive, options)
     .then(status)
     .then(jsonData)
-    .then(function(data) {
+    .then((data) => {
+        document.getElementById("loading").innerHTML = '';
         var listTeam = "";
-        data.teams.forEach(function(tim) {
+        data.teams.forEach((tim) => {
             listTeam += `
                 <style>
                 .row .club {
@@ -664,8 +672,8 @@ function getListTeam() {
 
 function checkRequestTeamSquad() {
 
-    document.querySelectorAll('ul li').forEach(function(el) {
-        el.addEventListener('click', function(event) {
+    document.querySelectorAll('ul li').forEach((el)  => {
+        el.addEventListener('click', (event) => {
             idTab = event.target.hash;
              if (idTab === '#ligainggris' || idTab === '#daftartim') {
                 getListTeam();
@@ -689,10 +697,10 @@ function getTeamById() {
         var idParam = urlParams.get("id");
     
         if ("caches" in window) {
-          caches.match(base_url + "teams/" + idParam).then(function(response) {
+          caches.match(base_url + "teams/" + idParam).then((response) => {
             if (response) {
-              response.json().then(function(data) {
-  
+              response.json().then((data) => {
+                document.getElementById("loading").innerHTML = '';
                 var teamHTML = `
                 <style>
                   .row {
@@ -712,7 +720,7 @@ function getTeamById() {
                 </div>
                 </div>
                   `;
-                  data.squad.forEach(function(player, index) {
+                  data.squad.forEach((player, index) => {
                       const dateParse = new Date(player.dateOfBirth);
                       const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                       const parse = dateParse.toLocaleDateString("id-ID", optionsDate);
@@ -788,8 +796,8 @@ function getTeamById() {
       fetch(base_url + "teams/" + idParam, options)
       .then(status)
       .then(jsonData)
-      .then(function(data) {
-  
+      .then((data) => {
+        document.getElementById("loading").innerHTML = '';
           var teamHTML = `
           <style>
             .row {
@@ -809,7 +817,7 @@ function getTeamById() {
           </div>
           </div>
             `;
-            data.squad.forEach(function(player, index) {
+            data.squad.forEach((player, index) => {
                 const dateParse = new Date(player.dateOfBirth);
                 const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 const parse = dateParse.toLocaleDateString("id-ID", optionsDate);
@@ -882,11 +890,12 @@ function getTeamById() {
 }
 
 function getSavedTeamFavorit() {
-    getAll().then(function(team) {
+    getAll().then((team) => {
+        document.getElementById("loading").innerHTML = '';
         console.log(team);
         var teamHTML = "";
         if (team.length !== 0 && team.length !== -1) {
-            team.forEach(function(tim) {
+            team.forEach((tim) => {
                 teamHTML += `
                 <div class="col s12 m3 lg3">
                 <div class="card center">
