@@ -13,18 +13,18 @@ if (!("serviceWorker" in navigator)) {
   function registerServiceWorker() {
     return navigator.serviceWorker
       .register("./sw.js")
-      .then(function (registration) {
+      .then((registration) => {
         console.log("Registrasi service worker berhasil.");
         return registration;
       })
-      .catch(function (err) {
+      .catch((err) => {
         console.error("Registrasi service worker gagal.", err);
       });
   }
 
   function requestPermission() {
     if ("Notification" in window) {
-      Notification.requestPermission().then(function (result) {
+      Notification.requestPermission().then((result) => {
         if (result === "denied") {
           console.log("Fitur notifikasi tidak diijinkan.");
           return;
@@ -67,7 +67,7 @@ if (!("serviceWorker" in navigator)) {
                     )
                   );
                 })
-                .catch(function (e) {
+                .catch((e) => {
                   console.error(
                     "Tidak dapat melakukan subscribe ",
                     e.message

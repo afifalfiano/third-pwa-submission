@@ -13,7 +13,7 @@ if ("serviceWorker" in navigator) {
     console.log("ServiceWorker belum didukung browser ini.");
   }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
 var urlParams = new URLSearchParams(window.location.search);
 var isFromSaved = urlParams.get("timfavorit");
 var save = document.getElementById("save");
@@ -29,11 +29,11 @@ if (isFromSaved) {
 }
 
 item.then(function(tim) {
-  checkData(tim).then(function(cek) {
+  checkData(tim).then((cek) => {
     console.log(cek);
     if (cek === null || cek === undefined) {
       del.style.display = 'none';
-      save.onclick = function() {
+      save.onclick = () => {
             console.log("Tombol FAB di klik.");
               saveForLater(tim);
               setTimeout(
@@ -44,7 +44,7 @@ item.then(function(tim) {
       };
     } else {
       save.style.display = 'none';
-      del.onclick = function() {
+      del.onclick = () => {
           console.log('Tombol Delete di klik');
           deleteItem(tim);
           setTimeout(

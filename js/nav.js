@@ -10,13 +10,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 if(this.status != 200) return;
 
                 document.querySelectorAll('.topnav, .sidenav').forEach(
-                    function(elm) {
+                    (elm) => {
                         elm.innerHTML = xhttp.responseText;
                     });
                 
                 document.querySelectorAll(".sidenav a, .topnav a").forEach(
-                    function(elm) {
-                        elm.addEventListener("click", function(event) {
+                    (elm) => {
+                        elm.addEventListener("click", (event) => {
                             var sidenav = document.querySelector(".sidenav");
                             M.Sidenav.getInstance(sidenav).close();
 
