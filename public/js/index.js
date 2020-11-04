@@ -92,3 +92,4 @@ if (!("serviceWorker" in navigator)) {
     }
     return outputArray;
   }
+

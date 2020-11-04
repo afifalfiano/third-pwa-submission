@@ -1,29 +1,5 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 
-// const CACHE_NAME = "kabarbola-v2";
-// var urlsToCache = [
-//     "/",
-//     "/nav.html",
-//     "/index.html",
-//     "/pages/home.html",
-//     "/pages/daftartim.html",
-//     "/pages/klasmenall.html",
-//     "/pages/timfavorit.html",
-//     "/pages/topskor.html",
-//     "/tim.html",
-//     "css/materialize.min.css",
-//     "js/materialize.min.js",
-//     "js/nav.js",
-//     "js/api.js",
-//     "js/db.js",
-//     "js/idb.js",
-//     "https://fonts.googleapis.com/icon?family=Material+Icons",
-//     "/manifest.json",
-//     "/icon.png",
-//     "/apple-touch-icon.png",
-//     "/icon-512x512.png",
-// ]
-
 if (workbox) {
   console.log("Workbox berhasil dimuat");
 } else {
