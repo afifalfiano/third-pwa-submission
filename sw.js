@@ -36,6 +36,7 @@ workbox.precaching.precacheAndRoute([
   {url: '/tim.html', revision: '1'},
   { url: '/css/materialize.min.css', revision: '1' },
   { url: '/css/index.css', revision: '1' },
+  { url: '/css/page.css', revision: '1' },
   { url: '/js/materialize.min.js', revision: '1' },
   { url: '/js/api.js', revision: '1' },
   { url: '/js/db.js', revision: '1' },
